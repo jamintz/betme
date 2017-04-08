@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  prop_id: 1
+  correct: false
+  title: MyString
+
+two:
+  prop_id: 1
+  correct: false
+  title: MyString
