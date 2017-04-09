@@ -15,11 +15,14 @@
         <td><%= prop.title %></td>
 		<td>
 			<table>
-				<% prop.guesses.each do |q| %>
+				<% prop.choices.each do |c| %>
 				<tr>
-					<%=q.title%>
-				</tr>
+					<td><%=c.title%></td>
+					<td><%="#{c.points} points"%></td>
+ 					
 				<% end %>
+				</tr>
+				
 			</table>
       </tr>
     <% end %>
