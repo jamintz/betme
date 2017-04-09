@@ -10,6 +10,8 @@ class GamesController < ApplicationController
   # GET /games/1
   # GET /games/1.json
   def show
+    g = Game.find(params['id'])
+    @props = g.props
   end
 
   # GET /games/new

@@ -1,0 +1,31 @@
+
+<h1>Props</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @props.each do |prop| %>
+      <tr>
+        <td><%= prop.title %></td>
+		<td>
+			<table>
+				<% prop.guesses.each do |q| %>
+				<tr>
+					<%=q.title%>
+				</tr>
+				<% end %>
+			</table>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Prop', new_prop_path %>
