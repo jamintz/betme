@@ -4,6 +4,11 @@ class GamesController < ApplicationController
   def index
     @games = Game.all
   end
+  
+  def overtime?(gid)
+    game = Game.find(gid)
+    return true if game.expires && Time.now > game.expires
+  end
 
   # GET /games/1
   # GET /games/1.json

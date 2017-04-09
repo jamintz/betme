@@ -1,4 +1,4 @@
-class PoolsController < ApplicationController
+class PoolsController < GamesController
   # GET /pools
   # GET /pools.json
   def index
@@ -62,14 +62,20 @@ class PoolsController < ApplicationController
   end
   
   def pick
-    g = params['pool']
-    Answer.where(user_id:current_user.id, game_id:g).destroy_all
-    params['props'].each do |prop,choice|
-      Answer.create(prop_id:prop,choice_id:choice,user_id:current_user.id,game_id:g)
+    gid = params['pool']
+    if overtime?(gid)
+      respond_to do |format|
+         format.html { redirect_to games_url, notice: 'This contest is currently closed' }
+       end
+    else
+      Answer.where(user_id:current_user.id, game_id:gid).destroy_all
+      params['props'].each do |prop,choice|
+        Answer.create(prop_id:prop,choice_id:choice,user_id:current_user.id,game_id:gid)
+      end
+      
+      respond_to do |format|
+         format.html { redirect_to games_url, notice: 'Selection successfully submitted' }
+       end
     end
-    
-    respond_to do |format|
-       format.html { redirect_to games_url, notice: 'Selection successfully submitted' }
-     end
   end
 end
