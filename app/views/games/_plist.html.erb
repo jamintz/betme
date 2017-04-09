@@ -1,6 +1,6 @@
 
 <h1>Props</h1>
-
+<%= form_tag({controller: "games", action: "pick"}, method: "post") do %>
 <table>
   <thead>
     <tr>
@@ -10,6 +10,7 @@
   </thead>
 
   <tbody>
+	<%= hidden_field_tag 'game', @game.id %>
     <% @props.each do |prop| %>
       <tr>
         <td><%= prop.title %></td>
@@ -19,15 +20,19 @@
 				<tr>
 					<td><%=c.title%></td>
 					<td><%="#{c.points} points"%></td>
- 					
+					<% check = Answer.where(user_id:current_user.id, prop_id: prop.id, choice_id: c.id).empty? ? false : true %>
+ 					<td><%= radio_button_tag "props[#{prop.id}]", c.id, check %></td>
 				<% end %>
 				</tr>
-				
 			</table>
+			
       </tr>
     <% end %>
   </tbody>
 </table>
+<%= submit_tag "Submit" %>
+<% end %>
+
 
 <br>
 

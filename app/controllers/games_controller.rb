@@ -1,6 +1,4 @@
 class GamesController < ApplicationController
-  before_action :set_game, only: [:show, :edit, :update, :destroy]
-
   # GET /games
   # GET /games.json
   def index
@@ -10,8 +8,8 @@ class GamesController < ApplicationController
   # GET /games/1
   # GET /games/1.json
   def show
-    g = Game.find(params['id'])
-    @props = g.props
+    @game = Game.find(params['id'])
+    @props = @game.props
   end
 
   # GET /games/new
@@ -43,13 +41,8 @@ class GamesController < ApplicationController
   # PATCH/PUT /games/1.json
   def update
     respond_to do |format|
-      if @game.update(game_params)
         format.html { redirect_to @game, notice: 'Game was successfully updated.' }
         format.json { render :show, status: :ok, location: @game }
-      else
-        format.html { render :edit }
-        format.json { render json: @game.errors, status: :unprocessable_entity }
-      end
     end
   end
 
@@ -62,15 +55,18 @@ class GamesController < ApplicationController
       format.json { head :no_content }
     end
   end
-
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_game
-      @game = Game.find(params[:id])
+  
+  def pick
+    g = params['game']
+    Answer.where(user_id:current_user.id, game_id:g).destroy_all
+    params['props'].each do |prop,choice|
+      Answer.create(prop_id:prop,choice_id:choice,user_id:current_user.id,game_id:g)
     end
+    
+    respond_to do |format|
+       format.html { redirect_to games_url, notice: 'Selection successfully submitted' }
+     end
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def game_params
-      params.require(:game).permit(:title, :active)
-    end
+
 end
