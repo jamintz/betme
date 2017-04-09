@@ -1,6 +1,6 @@
 
 <h1>Props</h1>
-<%= form_tag({controller: "games", action: "pick"}, method: "post") do %>
+<%= form_tag({controller: "pools", action: "pick"}, method: "post") do %>
 <table>
   <thead>
     <tr>
@@ -10,7 +10,7 @@
   </thead>
 
   <tbody>
-	<%= hidden_field_tag 'game', @game.id %>
+	<%= hidden_field_tag 'pool', @pool.id %>
     <% @props.each do |prop| %>
       <tr>
         <td><%= prop.title %></td>

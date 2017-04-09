@@ -8,8 +8,6 @@ class GamesController < ApplicationController
   # GET /games/1
   # GET /games/1.json
   def show
-    @game = Game.find(params['id'])
-    @props = @game.props
   end
 
   # GET /games/new
@@ -54,18 +52,6 @@ class GamesController < ApplicationController
       format.html { redirect_to games_url, notice: 'Game was successfully destroyed.' }
       format.json { head :no_content }
     end
-  end
-  
-  def pick
-    g = params['game']
-    Answer.where(user_id:current_user.id, game_id:g).destroy_all
-    params['props'].each do |prop,choice|
-      Answer.create(prop_id:prop,choice_id:choice,user_id:current_user.id,game_id:g)
-    end
-    
-    respond_to do |format|
-       format.html { redirect_to games_url, notice: 'Selection successfully submitted' }
-     end
   end
 
 
