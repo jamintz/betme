@@ -1,5 +1,5 @@
 
-<h1>Games</h1>
+<h1>Live Contests</h1>
 
 <table>
   <thead>
@@ -7,6 +7,7 @@
       <th>Title</th>
 	  <th>Closes At</th>
       <th>Pot</th>
+      <th>Owner</th>
       <th>Type</th>
       <th colspan="3"></th>
     </tr>
@@ -16,12 +17,11 @@
     <% @games.each do |game| %>
       <tr>
         <td><%= game.title %></td>
-        <td><%= game.expires %></td>
-        <td><%= game.pot %></td>
+        <td><%= Game.expire(game.expires) %></td>
+        <td>$<%= game.pot %></td>
+        <td><%= game.user.email %></td>
         <td><%= game.type %></td>
-        <td><%= link_to 'Show', game %></td>
-        <td><%= link_to 'Edit', edit_game_path(game) %></td>
-        <td><%= link_to 'Destroy', game, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Play', game %></td>
       </tr>
     <% end %>
   </tbody>
@@ -29,4 +29,34 @@
 
 <br>
 
+<h1>Drafts</h1>
+<table>
+    <thead>
+      <tr>
+        <th>Title</th>
+  	  <th>Closes At</th>
+        <th>Pot</th>
+        <th>Owner</th>
+        <th>Type</th>
+        <th colspan="3"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @games.each do |game| %>
+        <tr>
+          <td><%= game.title %></td>
+          <td><%= Game.expire(game.expires) %></td>
+          <td>$<%= game.pot %></td>
+          <td><%= game.user.email %></td>
+          <td><%= game.type %></td>
+          <td><%= link_to 'Edit', edit_polymorphic_path(game) %></td>
+        <td><%= link_to 'Destroy', game, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+		  
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+
 <%= link_to 'New Game', new_game_path %>
+

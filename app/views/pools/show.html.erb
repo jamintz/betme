@@ -1,21 +1,23 @@
 
-<p>
+<div>
   <strong>Title:</strong>
   <%= @pool.title %>
-</p>
-
-<p>
-  <strong>Active:</strong>
-  <%= @pool.active %>
-</p>
-
-<p>
+</div>
+<div>
+  <strong>Pot:</strong>
+  $<%= @pool.pot %>
+</div>
+<div>
+  <strong>Owner:</strong>
+  <%= @pool.user.email %>
+</div>
+<div>
   <strong>Closes At:</strong>
-  <%= @pool.active %>
-</p>
+  <%= Game.expire(@pool.expires) %>
+</div>
+<p>
 
 <%= render 'plist' %>
 
 
-<%= link_to 'Edit', edit_pool_path(@pool) %> |
-<%= link_to 'Back', pools_path %>
+<%= link_to 'Back', games_path %>
